@@ -103,7 +103,26 @@ public class ClsService {
 		System.out.println(u2.getUserAge());
 		System.out.println(u2.getUserGender());
 		
-		User u3 = new User("test33", "pwrd34r234");
 		
+		
+		User u3 = new User("test33", "pwrd34r234");
+		System.out.println(u3.getUserId());
 	}
+
+	public void ex4() {
+		User u4 = new User();
+		u4.setUserId("garam");
+		u4.setUserPw("비밀번호");
+		u4.setUserName("오가람");
+		u4.setUserAge(30);
+		u4.setUserGender('F');
+		
+		System.out.println(u4.getUserId());
+		System.out.println(u4.getUserPw());
+		System.out.println(u4.getUserName());
+		System.out.println(u4.getUserAge());
+		System.out.println(u4.getUserGender());
+	}
+
+	
 }

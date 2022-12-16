@@ -9,7 +9,8 @@ public class ClsRun {
 		ClsService cs = new ClsService();
 		
 //		cs.ex2();
-		cs.ex3();
+//		cs.ex3();
+		cs.ex4();
 	}
 
 }
