@@ -65,10 +65,11 @@ public class MemberService { // 클래스
 			
 			switch(menuNum) {
 			case 1 : System.out.println(signUp()); break;
-			case 2 : System.out.println(login());break;
-			case 3 : break;
-			case 4 : break;
-			case 0 : break;
+			case 2 : System.out.println(login()); break;
+			case 3 : selectMember(); break;
+			case 4 : memberUpdate(); break;
+			
+			case 0 : System.out.println("프로그램을 종료합니다."); break;
 			default : System.out.println("잘못 입력 하셨습니다. 다시 입력바랍니다!");
 			}
 		} while(menuNum != 0); // menuNum이 0이면 반복종료
@@ -77,7 +78,7 @@ public class MemberService { // 클래스
 	// 회원 가입 기능
 	public String signUp() {
 		// (반환형)
-		System.out.println("***** 회원 가입 *****");
+		System.out.println("\n ***** 회원 가입 ***** ");
 		System.out.print("아이디 : ");
 		String memberId = sc.next();
 		System.out.print("비밀번호 : ");
@@ -124,7 +125,117 @@ public class MemberService { // 클래스
 			return "아이디 또는 비밀번호가 일치하지 않습니다";
 		}
 	}
+	
 	// 회원 정보 조회 기능
-	// 회원 정보 수정(update) 기능
+	// 아이디, 이름, 나이
+	
+	// CRUD ( C:Create R:Read U:Update D:Delete )
+   public void selectMember() {
+	   // 1) 로그인 여부 확인 -> 필드 loginMember가 참조하는 객체가있는지 확인
+	   // 2) 로그인 되어있는 경우
+	   //    회원정보를 출력할 문자열을 만들어서 반환(return)
+	   //    단, 비밀번호는 제외
+	   if(loginMember == null) {
+		   System.out.println("로그인을 먼저 해주세요");
+	   } else {
+		   System.out.println(" ***** 회원 정보 조회 ***** ");
+		   System.out.println("아이디 : " + memberInfo.getMemberId());
+		   System.out.println("이름 : " + memberInfo.getMemberName());
+		   System.out.println("나이 : " + memberInfo.getMemberAge());
+	   }
+   }
+	
+   // 회원 정보 수정(update) 기능
+   
+   public void memberUpdate() {
+	   // 1) 로그인 여부 판별
+	   // 로그인이 되어있지 않으면 -1 반환
+	   // 2) 수정할 회원 정보 입력 받기(이름, 나이)
+	   // 3) 비밀번호 입력 받아서
+	   // 로그인한 회원의 비밀번호롸 일치한지 확인
+	   // 4) 비밀번호 같은 경우
+	   //    로그인한 회원의 이름, 나이 정보를 입력받은 값으로 변경 후
+	   //    1 반환
+	   // 5) 비밀번호가 다를 경우 0 반환
+	   if(loginMember == null) {
+		   System.out.println("로그인을 먼저 해주세요");
+	   } else {
+		   System.out.println("\n ***** 회원 정보 수정 ***** ");
+		   System.out.println("수정 할 항목을 선택해주세요");
+		   System.out.println("1. 아이디");
+		   System.out.println("2. 비밀번호");
+		   System.out.println("3. 이름");
+		   System.out.println("4. 나이");
+		   System.out.println("5. 처음 화면으로 되돌아 갑니다");
+		   System.out.print("메뉴 입력 >>> ");
+		   int menu2 = sc.nextInt();
+		   sc.nextLine();
+		   
+		   switch(menu2) {
+		   case 1 : System.out.println(updateId()); break;
+		   case 2 : System.out.println(updatePw()); break;
+		   case 3 : System.out.println(updateName()); break;
+		   case 4 : System.out.println(updateAge()); break;
+		   case 5 : displayMenu(); break;
+		   default : System.out.println("1~5의 숫자만 입력해 주세요");
+			   
+		   
+		   }
+	   }
+   }
+   
+   public String updateId() {
+	  String userId;
+	  System.out.println("아이디 변경 : ");
+	  memberInfo.setMemberId(userId = sc.next());
+	  return "아이디가 성공적으로 변경되었습니다.";
+   }
+   
+   public String updatePw() {
+	   String userPw;
+	   System.out.println("비밀번호 변경 : ");
+	   memberInfo.setMemberPw(userPw = sc.next());
+	   return "비밀번호가 성공적으로 변경되었습니다.";
+   }
+   
+   public String updateName() {
+	   String userName;
+	   System.out.println("이름 변경 : ");
+	   memberInfo.setMemberName(userName = sc.next());
+	   return "이름이 성공적으로 변경되었습니다.";
+   }
+   
+   public String updateAge() {
+	   int userAge;
+	   System.out.println("나이 변경 : ");
+	   memberInfo.setMemberAge(userAge = sc.nextInt());
+	   return "나이가 성공적으로 변경되었습니다.";
+   }
+	   
+   public int updateMember() {
+	   System.out.println("\n*****회원정보 수정*****");
+	   if(loginMember == null) {
+		   return -1;
+	   }
+	   System.out.print("수정할 이름 입력 : ");
+	   String inputName = sc.next();
+	   System.out.print("수정할 나이 입력 : ");
+	   int inputAge = sc.nextInt();
+	   sc.nextLine();
+	   System.out.print("비밀번호 입력 : ");
+	   String inputPw = sc.next();
+	   if(inputPw.equals(loginMember.getMemberPw())) {
+		   loginMember.setMemberName(inputName);
+		   // 입력받은 inputName을
+		   // loginMember가 참조하는 Member 객체의 필드 memberName에 대입
+		   loginMember.setMemberAge(inputAge);
+		   return 1;
+	   } else {
+		   return 0;
+	   }
+   }
+   
+   
+   
 	
 }
